@@ -1,0 +1,26 @@
+# Dependencies
+web/node_modules/
+
+# Build
+web/.next/
+web/out/
+
+# RTFM index (regenerated)
+wiki/.rtfm/
+
+# Obsidian
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.trash/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+web/.env.local
+.wiki-path
+
+# Screenshots
+*.png
+!web/public/favicon.png
