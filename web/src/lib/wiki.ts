@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import type { WikiPage, GraphNode, GraphLink } from "./types";
 import { CATEGORY_COLORS } from "./types";
 
-const WIKI_ROOT = process.env.WIKI_PATH || path.resolve(process.cwd(), "..", "wiki");
+const WIKI_ROOT = path.resolve(process.cwd(), "..", "wiki");
 const CLIPPINGS_DIR = path.resolve(path.dirname(WIKI_ROOT), "Clippings");
 
 const CATEGORY_GROUPS: Record<string, number> = {

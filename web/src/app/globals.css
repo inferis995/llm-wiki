@@ -163,7 +163,6 @@
   100%      { opacity: 0.15; transform: scale(1); }
 }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   @keyframes morph-icon {
     0%, 100% { opacity: 1; transform: none; }

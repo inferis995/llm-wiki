@@ -73,7 +73,7 @@ export default function HomeClient({ pages, nodes, links, grouped, categoryColor
           <div className="p-4 border-b border-surface-800">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2.5">
-                <AnimatedLogo size={32} />
+                <AnimatedLogo size={160} />
                 <h1 className="text-lg font-bold text-surface-100 tracking-tight">
                   <span className="text-accent">Wiki</span> Viewer
                 </h1>
@@ -162,7 +162,7 @@ export default function HomeClient({ pages, nodes, links, grouped, categoryColor
         <header className="flex items-center gap-3 px-4 py-2 border-b border-surface-800 bg-surface-950/80 backdrop-blur-sm">
           {!sidebarOpen && (
             <>
-              <AnimatedLogo size={24} />
+              <AnimatedLogo size={96} />
               <button
                 onClick={() => setSidebarOpen(true)}
                 className="p-1.5 rounded-md text-surface-400 hover:text-surface-200 hover:bg-surface-800 transition-colors"
