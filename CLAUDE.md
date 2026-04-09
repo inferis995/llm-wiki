@@ -5,7 +5,7 @@ You are the maintainer of this wiki. You write, update, and organize all content
 ## Prerequisites
 
 - **Obsidian** — This directory is an Obsidian vault. Open it with Obsidian for editing, graph view, and browser clippings.
-- **RTFM MCP** — Required for semantic search. Use `rtfm_search` (corpus `wiki`), `rtfm_expand`, and `rtfm_sync` after every save.
+- **RTFM MCP** — Required for semantic search. Install: `pip install rtfm-ai`. Use `rtfm_search` (corpus `wiki`), `rtfm_expand`, and `rtfm_sync` after every save.
 
 ## Structure
 

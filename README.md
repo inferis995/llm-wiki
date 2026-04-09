@@ -20,6 +20,37 @@
 
 ---
 
+## One-Shot Setup
+
+Clone, run one script, everything is installed automatically:
+
+```bash
+# Clone
+git clone https://github.com/inferis995/llm-wiki.git my-wiki
+cd my-wiki
+
+# Install everything (Obsidian, RTFM MCP, skills, web UI, git)
+./install.sh          # Linux/macOS
+# or
+.\install.ps1         # Windows
+```
+
+**The install script handles:**
+- Downloads and installs [Obsidian](https://obsidian.md) (latest release from GitHub)
+- Installs [RTFM MCP](https://github.com/roomi-fields/rtfm) via `pip install rtfm-ai`
+- Configures `~/.mcp.json` with RTFM server settings
+- Installs the Obsidian Vault skill (`~/.claude/skills/obsidian-vault/`)
+- Installs the LLM Wiki skill (`~/.claude/skills/llm-wiki/`)
+- Installs web UI dependencies (`npm install`)
+- Initializes git and syncs RTFM index
+
+**After install, just:**
+1. Open the folder as an Obsidian vault
+2. Restart Claude Code (to load MCP servers)
+3. Say `ingest <url>` to add your first source
+
+That's it. No manual configuration needed.
+
 ## What You Get
 
 | Feature | Description |
@@ -33,40 +64,14 @@
 
 ## Requirements
 
-- **Obsidian** — [Download here](https://obsidian.md/download) (free)
-- **Claude Code** — CLI for AI operations
-- **RTFM MCP** — [Setup guide](https://github.com/pashpashpash/rtfm-mcp) (semantic search)
-- **Node.js 18+** — For the web UI
-- **Git** — For version control
-
-## Quick Start
-
-```bash
-# 1. Clone
-git clone https://github.com/inferis995/llm-wiki.git my-wiki
-cd my-wiki
-
-# 2. Install
-./install.sh        # Linux/macOS
-# or
-.\install.ps1       # Windows
-
-# 3. Open as Obsidian vault
-#    Launch Obsidian → "Open folder as vault" → select this directory
-
-# 4. Use it
-#    - Open this directory in Claude Code
-#    - Say "ingest <url>" to add your first source
-#    - Ask questions — knowledge is auto-saved with semantic search
-```
-
-### Setup Steps in Detail
-
-1. **Install Obsidian** — Download from [obsidian.md/download](https://obsidian.md/download)
-2. **Setup RTFM MCP** — Follow the [RTFM MCP guide](https://github.com/pashpashpash/rtfm-mcp) to add it to your Claude Code MCP settings
-3. **Clone and install** — Run the install script (copies skill + installs web dependencies + inits git)
-4. **Open in Obsidian** — Use "Open folder as vault" to open the project directory
-5. **Open in Claude Code** — The llm-wiki skill is auto-discovered, start ingesting sources
+| Tool | Auto-installed? | Notes |
+|------|----------------|-------|
+| **Obsidian** | Yes | Downloaded from GitHub releases |
+| **RTFM MCP** | Yes | Installed via `pip install rtfm-ai` |
+| **Claude Code** | No | Required — [install guide](https://docs.anthropic.com/en/docs/claude-code) |
+| **Node.js 18+** | No | Required for web UI — [download](https://nodejs.org) |
+| **Python 3** | No | Required for RTFM MCP — [download](https://python.org) |
+| **Git** | No | Required for version control |
 
 ## Usage
 
@@ -122,16 +127,15 @@ WIKI_PATH=/path/to/your/wiki/content
 
 This repo is a fully functional Obsidian vault:
 
-1. **Download** Obsidian from [obsidian.md/download](https://obsidian.md/download)
-2. **Open** this repo folder as a vault ("Open folder as vault")
-3. **Edit** pages in Obsidian — Claude reads and updates them too
-4. **Graph view** (icon in left sidebar) shows connections between all wiki pages
-5. **Search** with Ctrl/Cmd+Shift+F across all content
-6. **Web Clipper** saves clippings from your browser directly to the vault
+1. **Open** this repo folder as a vault ("Open folder as vault")
+2. **Edit** pages in Obsidian — Claude reads and updates them too
+3. **Graph view** (icon in left sidebar) shows connections between all wiki pages
+4. **Search** with Ctrl/Cmd+Shift+F across all content
+5. **Web Clipper** saves clippings from your browser directly to the vault
 
-### Obsidian Skill (Optional)
+### Obsidian Skill
 
-If you also install the [Obsidian Vault skill](https://skills.sh/mattpocock/skills/obsidian-vault), Claude follows additional conventions:
+The [Obsidian Vault skill](https://skills.sh/mattpocock/skills/obsidian-vault) is installed automatically by the setup script. It adds conventions:
 - Flat structure at vault root when possible
 - Title Case filenames
 - Index notes for navigation
@@ -145,8 +149,8 @@ llm-wiki/
 ├── README.md          # This file
 ├── LICENSE            # MIT
 ├── .gitignore
-├── install.sh         # Setup script (Unix)
-├── install.ps1        # Setup script (Windows)
+├── install.sh         # One-shot setup (Linux/macOS)
+├── install.ps1        # One-shot setup (Windows)
 │
 ├── skill/
 │   └── SKILL.md       # Claude Code skill (installed to ~/.claude/skills/llm-wiki/)
@@ -165,8 +169,8 @@ llm-wiki/
 │   ├── index.md       # Page catalog
 │   ├── log.md         # Chronological record
 │   ├── sources/       # Source summaries
-│   ├── entities/      # Things (software, hardware, protocols...),
-│   ├── concepts/      # Ideas (patterns, architectures, concepts...),
+│   ├── entities/      # Things (software, hardware, protocols...)
+│   ├── concepts/      # Ideas (patterns, architectures, concepts...)
 │   └── comparisons/   # Head-to-head comparisons
 │
 ├── Clippings/         # Browser clippings (saved via Obsidian web clipper)

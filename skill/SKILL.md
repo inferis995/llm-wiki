@@ -5,7 +5,7 @@ description: >
   Ingest sources, create wiki pages, query knowledge base, lint health.
   Triggers: wiki, knowledge base, ingest source, note-taking, personal wiki,
   markdown knowledge, obsidian vault, "save to wiki", "wiki ingest", "wiki query", "wiki lint".
-version: 2.0.0
+version: 3.0.0
 tags: [wiki, knowledge, markdown, obsidian, rtfm, notes, claude-code]
 author: inferis995
 license: MIT
@@ -24,8 +24,46 @@ This wiki requires:
    - Download: https://obsidian.md/download
    - The project root IS an Obsidian vault — open it with Obsidian
 2. **RTFM MCP** — Semantic search server for wiki content
-   - Setup: https://github.com/pashpashpash/rtfm-mcp
-   - Must be configured in your Claude Code MCP settings before using this skill
+   - Install: `pip install rtfm-ai`
+   - Repo: https://github.com/roomi-fields/rtfm
+   - Configured in `~/.mcp.json` by the install script
+
+## First Run Setup
+
+If the install script (`install.sh` or `install.ps1`) has already been run, everything should be ready. If not, or if Claude needs to complete setup manually:
+
+### 1. Install RTFM MCP
+```bash
+pip install rtfm-ai
+```
+
+### 2. Configure MCP settings
+Add this to `~/.mcp.json` (create if missing):
+```json
+{
+  "mcpServers": {
+    "rtfm": {
+      "command": "python",
+      "args": ["-m", "rtfm.mcp"],
+      "env": { "RTFM_DB": "<wiki_root>/wiki/.rtfm/library.db" }
+    }
+  }
+}
+```
+
+### 3. Enable RTFM in Claude Code
+Ensure `~/.claude/settings.local.json` includes `"rtfm"` in `enabledMcpjsonServers`.
+
+### 4. Install skills
+- Copy `skill/SKILL.md` to `~/.claude/skills/llm-wiki/SKILL.md`
+- Copy the obsidian-vault skill content to `~/.claude/skills/obsidian-vault/SKILL.md`
+
+### 5. Sync RTFM
+```bash
+rtfm sync wiki/ --corpus wiki
+```
+
+### 6. Restart Claude Code to load MCP servers.
 
 ## Wiki Location
 
@@ -188,10 +226,11 @@ Before answering technical questions:
 ## RTFM MCP
 
 RTFM MCP is **required** for semantic search over wiki content:
+- **Install**: `pip install rtfm-ai`
+- **Repo**: https://github.com/roomi-fields/rtfm
 - **Search**: `rtfm_search` in corpus `wiki`
 - **Read**: `rtfm_expand` on results
 - **Sync**: `rtfm_sync` on `wiki/` directory after every save
-- Setup guide: https://github.com/pashpashpash/rtfm-mcp
 
 ## Web UI
 
