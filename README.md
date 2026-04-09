@@ -13,6 +13,10 @@
   </p>
 </p>
 
+<p align="center">
+  <img src="web/public/screenshot.png" alt="LLM Wiki Web UI" width="800">
+</p>
+
 ---
 
 ## What You Get

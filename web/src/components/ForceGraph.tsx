@@ -37,8 +37,10 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
 
     const svg = d3.select(svgRef.current).attr("viewBox", `0 0 ${width} ${height}`);
 
+    // Clear previous
     svg.selectAll("*").remove();
 
+    // Arrow markers
     svg
       .append("defs")
       .append("marker")
@@ -55,12 +57,14 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
 
     const g = svg.append("g");
 
+    // Zoom
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.3, 4])
       .on("zoom", (event) => g.attr("transform", event.transform));
     svg.call(zoom);
 
+    // Simulation
     const simulation = d3
       .forceSimulation<GraphNode>(nodes)
       .force("link", d3.forceLink<GraphNode, GraphLink>(links).id((d) => d.id).distance(100))
@@ -70,6 +74,7 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
 
     simulationRef.current = simulation;
 
+    // Links
     const link = g
       .append("g")
       .selectAll("line")
@@ -80,6 +85,7 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
       .attr("stroke-opacity", 0.6)
       .attr("marker-end", "url(#arrow)");
 
+    // Node groups
     const node = g
       .append("g")
       .selectAll<SVGGElement, GraphNode>("g")
@@ -106,6 +112,7 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
           })
       );
 
+    // Node circles
     node
       .append("circle")
       .attr("r", 8)
@@ -117,6 +124,7 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
       .attr("stroke-opacity", 0.5)
       .style("transition", "stroke 0.2s, stroke-width 0.2s");
 
+    // Labels
     node
       .append("text")
       .text((d) => d.title)
@@ -128,6 +136,7 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
       .style("pointer-events", "none")
       .style("text-shadow", "0 1px 3px rgba(0,0,0,0.8)");
 
+    // Tooltip
     const tooltip = d3.select(tooltipRef.current);
 
     node
@@ -147,6 +156,7 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
         tooltip.style("opacity", 0);
       });
 
+    // Tick
     simulation.on("tick", () => {
       link
         .attr("x1", (d) => (d.source as unknown as GraphNode).x!)
@@ -157,6 +167,7 @@ export default function ForceGraph({ nodes, links, onNodeClick, activeNode }: Pr
       node.attr("transform", (d) => `translate(${d.x},${d.y})`);
     });
 
+    // Resize listener
     window.addEventListener("resize", handleResize);
 
     return () => {
