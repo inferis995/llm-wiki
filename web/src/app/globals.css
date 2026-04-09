@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  body {
+    @apply bg-surface-950 text-surface-200 antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent/30;
+  }
+}
+
+@layer components {
+  .sidebar-link {
+    @apply flex items-center gap-2 px-3 py-1.5 text-sm rounded-md
+           text-surface-400 hover:text-surface-200 hover:bg-surface-800/60
+           transition-colors duration-150 cursor-pointer;
+  }
+
+  .sidebar-link.active {
+    @apply text-accent-light bg-accent/10;
+  }
+
+  .category-badge {
+    @apply inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  .wiki-link {
+    @apply text-accent-light hover:text-accent underline decoration-accent/30
+           hover:decoration-accent transition-colors duration-150 cursor-pointer;
+  }
+
+  .page-card {
+    @apply bg-surface-900/60 border border-surface-800 rounded-xl p-6
+           hover:border-surface-700 transition-colors duration-200;
+  }
+
+  .tag {
+    @apply inline-block px-2 py-0.5 text-xs rounded-md
+           bg-surface-800 text-surface-400;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-surface-700 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-surface-600;
+}
+
+/* Markdown prose */
+.prose-wiki {
+  @apply leading-relaxed;
+}
+
+.prose-wiki h1 {
+  @apply text-3xl font-bold text-surface-100 mt-0 mb-6;
+}
+
+.prose-wiki h2 {
+  @apply text-xl font-semibold text-surface-100 mt-10 mb-4 pb-2 border-b border-surface-800;
+}
+
+.prose-wiki h3 {
+  @apply text-lg font-semibold text-surface-200 mt-8 mb-3;
+}
+
+.prose-wiki p {
+  @apply text-surface-300 mb-4;
+}
+
+.prose-wiki ul, .prose-wiki ol {
+  @apply ml-6 mb-4 text-surface-300;
+}
+
+.prose-wiki ul {
+  @apply list-disc;
+}
+
+.prose-wiki ol {
+  @apply list-decimal;
+}
+
+.prose-wiki li {
+  @apply mb-1;
+}
+
+.prose-wiki code {
+  @apply px-1.5 py-0.5 text-sm rounded bg-surface-800 text-accent-light font-mono;
+}
+
+.prose-wiki pre {
+  @apply p-4 rounded-lg bg-surface-900 border border-surface-800 overflow-x-auto mb-4;
+}
+
+.prose-wiki pre code {
+  @apply p-0 bg-transparent text-surface-300 text-sm;
+}
+
+.prose-wiki blockquote {
+  @apply border-l-2 border-accent/40 pl-4 italic text-surface-400 mb-4;
+}
+
+.prose-wiki table {
+  @apply w-full text-sm mb-4;
+}
+
+.prose-wiki th {
+  @apply text-left px-3 py-2 font-semibold text-surface-200 border-b border-surface-700;
+}
+
+.prose-wiki td {
+  @apply px-3 py-2 text-surface-300 border-b border-surface-800;
+}
+
+.prose-wiki a {
+  @apply wiki-link;
+}
+
+.prose-wiki strong {
+  @apply text-surface-100 font-semibold;
+}
+
+.prose-wiki hr {
+  @apply border-surface-800 my-8;
+}
+
+/* Graph tooltip */
+.graph-tooltip {
+  @apply absolute pointer-events-none px-3 py-1.5 text-xs rounded-lg
+         bg-surface-800 border border-surface-700 text-surface-200
+         shadow-lg shadow-black/20 z-50;
+}
