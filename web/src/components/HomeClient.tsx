@@ -57,7 +57,7 @@ export default function HomeClient({ pages, nodes, links, grouped, categoryColor
     }
   }
 
-  const categoryOrder = ["sources", "entities", "concepts", "comparisons"];
+  const categoryOrder = ["sources", "entities", "concepts", "comparisons", "clippings"];
 
   return (
     <div className="h-screen flex overflow-hidden">
@@ -180,7 +180,7 @@ export default function HomeClient({ pages, nodes, links, grouped, categoryColor
           )}
           <div className="flex-1" />
           <div className="flex items-center gap-3 text-xs text-surface-500">
-            {["sources", "entities", "concepts", "comparisons"].map((cat) => (
+            {["sources", "entities", "concepts", "comparisons", "clippings"].map((cat) => (
               <span key={cat} className="flex items-center gap-1">
                 <span
                   className="w-2 h-2 rounded-full"
