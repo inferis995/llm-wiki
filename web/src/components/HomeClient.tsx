@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import type { WikiPage, GraphNode, GraphLink } from "@/lib/types";
 import MarkdownViewer from "./MarkdownViewer";
+import AnimatedLogo from "./AnimatedLogo";
 
 const ForceGraph = dynamic(() => import("./ForceGraph"), { ssr: false });
 
@@ -71,9 +72,12 @@ export default function HomeClient({ pages, nodes, links, grouped, categoryColor
           {/* Sidebar Header */}
           <div className="p-4 border-b border-surface-800">
             <div className="flex items-center justify-between mb-3">
-              <h1 className="text-lg font-bold text-surface-100 tracking-tight">
-                <span className="text-accent">Wiki</span> Viewer
-              </h1>
+              <div className="flex items-center gap-2.5">
+                <AnimatedLogo size={32} />
+                <h1 className="text-lg font-bold text-surface-100 tracking-tight">
+                  <span className="text-accent">Wiki</span> Viewer
+                </h1>
+              </div>
               <button
                 onClick={() => setSidebarOpen(false)}
                 className="p-1 rounded text-surface-500 hover:text-surface-300 transition-colors"
@@ -157,15 +161,18 @@ export default function HomeClient({ pages, nodes, links, grouped, categoryColor
         {/* Top Bar */}
         <header className="flex items-center gap-3 px-4 py-2 border-b border-surface-800 bg-surface-950/80 backdrop-blur-sm">
           {!sidebarOpen && (
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="p-1.5 rounded-md text-surface-400 hover:text-surface-200 hover:bg-surface-800 transition-colors"
-              aria-label="Apri sidebar"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 12h18M3 6h18M3 18h18" />
-              </svg>
-            </button>
+            <>
+              <AnimatedLogo size={24} />
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="p-1.5 rounded-md text-surface-400 hover:text-surface-200 hover:bg-surface-800 transition-colors"
+                aria-label="Apri sidebar"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 12h18M3 6h18M3 18h18" />
+                </svg>
+              </button>
+            </>
           )}
           {activePage && (
             <button
