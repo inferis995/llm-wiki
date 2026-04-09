@@ -32,6 +32,8 @@ export const CATEGORY_COLORS: Record<string, string> = {
   entities: "#22c55e",
   concepts: "#f59e0b",
   comparisons: "#a855f7",
+  clippings: "#ef4444",
+  root: "#6b7280",
 };
 
 export const CATEGORY_LABELS: Record<string, string> = {
@@ -39,4 +41,6 @@ export const CATEGORY_LABELS: Record<string, string> = {
   entities: "Entita",
   concepts: "Concetti",
   comparisons: "Confronti",
+  clippings: "Clippings",
+  root: "Root",
 };

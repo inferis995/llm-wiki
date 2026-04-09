@@ -5,12 +5,15 @@ import type { WikiPage, GraphNode, GraphLink } from "./types";
 import { CATEGORY_COLORS } from "./types";
 
 const WIKI_ROOT = process.env.WIKI_PATH || path.resolve(process.cwd(), "..", "wiki");
+const CLIPPINGS_DIR = path.resolve(path.dirname(WIKI_ROOT), "Clippings");
 
 const CATEGORY_GROUPS: Record<string, number> = {
   sources: 0,
   entities: 1,
   concepts: 2,
   comparisons: 3,
+  clippings: 4,
+  root: 5,
 };
 
 function walkDir(dir: string): string[] {
@@ -31,16 +34,19 @@ function walkDir(dir: string): string[] {
 const WIKILINK_RE = /\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
 
 export function getAllPages(): WikiPage[] {
-  const mdFiles = walkDir(WIKI_ROOT);
+  const mdFiles = [...walkDir(WIKI_ROOT), ...walkDir(CLIPPINGS_DIR)];
   const pages: WikiPage[] = [];
 
   for (const filePath of mdFiles) {
     const raw = fs.readFileSync(filePath, "utf-8");
-    const { data, content } = matter(raw, { explicitDate: false });
-    const relative = path.relative(WIKI_ROOT, filePath);
+    const { data, content } = matter(raw);
+    const isInClippings = filePath.startsWith(CLIPPINGS_DIR);
+    const relative = isInClippings
+      ? path.join("clippings", path.relative(CLIPPINGS_DIR, filePath))
+      : path.relative(WIKI_ROOT, filePath);
     const slug = relative.replace(/\.md$/, "");
     const parts = slug.split(path.sep);
-    const category = parts.length > 1 ? parts[0] : "root";
+    const category = isInClippings ? "clippings" : parts.length > 1 ? parts[0] : "root";
     const title = data.title || path.basename(filePath, ".md");
 
     const links: string[] = [];
