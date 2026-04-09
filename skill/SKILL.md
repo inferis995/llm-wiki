@@ -164,6 +164,31 @@ The project includes a Next.js web app in `web/` that visualizes the wiki:
 - Click nodes to read pages, click wikilinks to navigate
 - Customizable path: set `WIKI_PATH` env var in `web/.env.local`
 
+## Obsidian Setup (Optional)
+
+The wiki is fully Obsidian-compatible. To use Obsidian as a GUI editor:
+
+### Install Obsidian
+1. Download from https://obsidian.md/download
+2. Install for your platform (Windows / macOS / Linux)
+3. Launch Obsidian
+
+### Open as Vault
+1. Click **"Open folder as vault"**
+2. Select the project root directory (the one containing `wiki/`, `raw/`, `CLAUDE.md`)
+3. Obsidian will index all `.md` files automatically
+
+### Verify
+- `[[wikilinks]]` should resolve and show as clickable links
+- The graph view (icon in left sidebar) shows connections between pages
+- All pages in `wiki/` appear in the file explorer
+
+### Tips
+- Edit pages in Obsidian — Claude reads and updates them too
+- Use the graph view to explore knowledge connections
+- Install community plugins if desired (the vault works perfectly without them)
+- `raw/` folder is ignored by Obsidian conventions — it's for source documents only
+
 ## RTFM MCP (Optional)
 
 If RTFM MCP server is available, use it for enhanced search:
