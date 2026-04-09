@@ -1,15 +1,16 @@
 <p align="center">
   <h1 align="center">LLM Wiki</h1>
   <p align="center">
-    <strong>Personal knowledge base powered by Claude Code.</strong><br>
-    Obsidian-compatible markdown with an interactive web graph viewer.
+    <strong>Personal knowledge base powered by Claude Code + Obsidian.</strong><br>
+    Obsidian vault with `[[wikilinks]]`, semantic search via RTFM MCP, and an interactive web graph viewer.
   </p>
   <p align="center">
     <img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js" alt="Next.js">
     <img src="https://img.shields.io/badge/D3.js-7-orange?logo=d3.js" alt="D3.js">
     <img src="https://img.shields.io/badge/Tailwind_CSS-3-blue?logo=tailwindcss" alt="Tailwind CSS">
+    <img src="https://img.shields.io/badge/Obsidian-Vault-purple?logo=obsidian" alt="Obsidian">
+    <img src="https://img.shields.io/badge/RTFM_MCP-Semantic_Search-green" alt="RTFM MCP">
     <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
-    <img src="https://img.shields.io/badge/Claude_Code-Skill-purple" alt="Claude Code">
   </p>
 </p>
 
@@ -23,12 +24,20 @@
 
 | Feature | Description |
 |---------|-------------|
+| **Obsidian Vault** | This repo IS an Obsidian vault — open it directly, edit with `[[wikilinks]]`, use graph view |
 | **Wiki Engine** | Structured markdown with `[[wikilinks]]`, auto-indexing, categories (sources, entities, concepts, comparisons) |
 | **Claude Code Skill** | Ingest sources, query knowledge, auto-save, health-check your wiki |
+| **RTFM MCP** | Semantic search over all wiki content — find anything instantly |
 | **Web UI** | Next.js + D3.js force-directed graph + markdown viewer with clickable wikilinks |
-| **Obsidian Compatible** | Open the repo as an Obsidian vault for GUI editing |
-| **Clippings Support** | Browser clippings saved via Obsidian appear automatically in the web UI |
-| **RTFM Optional** | Semantic search over wiki content via RTFM MCP |
+| **Browser Clippings** | Save web clippings via Obsidian clipper — they appear automatically in the web UI |
+
+## Requirements
+
+- **Obsidian** — [Download here](https://obsidian.md/download) (free)
+- **Claude Code** — CLI for AI operations
+- **RTFM MCP** — [Setup guide](https://github.com/pashpashpash/rtfm-mcp) (semantic search)
+- **Node.js 18+** — For the web UI
+- **Git** — For version control
 
 ## Quick Start
 
@@ -37,20 +46,27 @@
 git clone https://github.com/inferis995/llm-wiki.git my-wiki
 cd my-wiki
 
-# 2. Install (copies skill + installs web dependencies)
+# 2. Install
 ./install.sh        # Linux/macOS
 # or
 .\install.ps1       # Windows
 
-# 3. Add auto-rules to Claude Code memory
-#    Copy the template from docs/auto-rules.md into your project MEMORY.md
-#    (see docs/auto-rules.md for instructions)
+# 3. Open as Obsidian vault
+#    Launch Obsidian → "Open folder as vault" → select this directory
 
 # 4. Use it
 #    - Open this directory in Claude Code
 #    - Say "ingest <url>" to add your first source
-#    - Ask questions — knowledge is auto-saved
+#    - Ask questions — knowledge is auto-saved with semantic search
 ```
+
+### Setup Steps in Detail
+
+1. **Install Obsidian** — Download from [obsidian.md/download](https://obsidian.md/download)
+2. **Setup RTFM MCP** — Follow the [RTFM MCP guide](https://github.com/pashpashpash/rtfm-mcp) to add it to your Claude Code MCP settings
+3. **Clone and install** — Run the install script (copies skill + installs web dependencies + inits git)
+4. **Open in Obsidian** — Use "Open folder as vault" to open the project directory
+5. **Open in Claude Code** — The llm-wiki skill is auto-discovered, start ingesting sources
 
 ## Usage
 
@@ -58,13 +74,13 @@ cd my-wiki
 ```
 > ingest https://github.com/some/project
 ```
-Claude reads the source, creates wiki pages, updates the index, and commits.
+Claude reads the source, creates wiki pages with `[[wikilinks]]`, updates the index, syncs RTFM, and commits.
 
 ### Query the wiki
 ```
 > What do I know about Docker networking?
 ```
-Claude searches the wiki and answers with `[[wikilink]]` citations.
+Claude uses RTFM semantic search to find relevant pages and answers with `[[wikilink]]` citations.
 
 ### Health check
 ```
@@ -73,7 +89,10 @@ Claude searches the wiki and answers with `[[wikilink]]` citations.
 Claude scans for orphans, contradictions, and missing cross-references.
 
 ### Auto-save
-Knowledge is saved automatically during conversations when useful information emerges. No manual action needed.
+Knowledge is saved automatically during conversations when useful information emerges. No manual action needed. Every save triggers RTFM sync so new content is instantly searchable.
+
+### Browser Clippings
+Use the [Obsidian Web Clipper](https://obsidian.md/clipper) browser extension to save web pages. Clippings appear in the `Clippings/` folder and show up as red nodes in the web UI.
 
 ## Web UI
 
@@ -99,15 +118,24 @@ Create `web/.env.local`:
 WIKI_PATH=/path/to/your/wiki/content
 ```
 
-## Obsidian Setup (Optional)
+## Obsidian Vault
 
-The wiki is fully Obsidian-compatible. Use Obsidian as a GUI editor:
+This repo is a fully functional Obsidian vault:
 
 1. **Download** Obsidian from [obsidian.md/download](https://obsidian.md/download)
 2. **Open** this repo folder as a vault ("Open folder as vault")
 3. **Edit** pages in Obsidian — Claude reads and updates them too
-4. **Graph view** shows connections between all wiki pages
-5. **Clippings** saved from the browser via Obsidian appear in the web UI automatically
+4. **Graph view** (icon in left sidebar) shows connections between all wiki pages
+5. **Search** with Ctrl/Cmd+Shift+F across all content
+6. **Web Clipper** saves clippings from your browser directly to the vault
+
+### Obsidian Skill (Optional)
+
+If you also install the [Obsidian Vault skill](https://skills.sh/mattpocock/skills/obsidian-vault), Claude follows additional conventions:
+- Flat structure at vault root when possible
+- Title Case filenames
+- Index notes for navigation
+- Backlink discovery via grep
 
 ## Project Structure
 
@@ -137,11 +165,11 @@ llm-wiki/
 │   ├── index.md       # Page catalog
 │   ├── log.md         # Chronological record
 │   ├── sources/       # Source summaries
-│   ├── entities/      # Things (software, hardware, protocols...)
-│   ├── concepts/      # Ideas (patterns, architectures, concepts...)
+│   ├── entities/      # Things (software, hardware, protocols...),
+│   ├── concepts/      # Ideas (patterns, architectures, concepts...),
 │   └── comparisons/   # Head-to-head comparisons
 │
-├── Clippings/         # Browser clippings (saved via Obsidian)
+├── Clippings/         # Browser clippings (saved via Obsidian web clipper)
 │
 ├── raw/               # Original source documents (immutable)
 │
@@ -170,25 +198,26 @@ llm-wiki/
 ┌──────────────┐     create      ┌──────────────┐
 │  Claude Code │ ──────────────► │  wiki/        │  (structured markdown)
 │  (skill)     │ ◄────────────── │  sources/     │
-└──────────────┘     query       │  entities/    │
-        │                        │  concepts/    │
-        ▼                        │  comparisons/ │
+└──────┬───────┘     query       │  entities/    │
+       │                        │  concepts/    │
+       ▼                        │  comparisons/ │
 ┌──────────────┐                  └──────┬───────┘
-│  Web UI      │ ◄─────────────────────┘
-│  (Next.js)   │    reads wiki/ + Clippings/
+│  RTFM MCP    │ ◄──── sync ────────────┘
+│  (search)    │ ─── semantic search ────┘
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐     read        ┌──────────────┐
+│  Web UI      │ ◄────────────── │  wiki/        │
+│  (Next.js)   │                  │  Clippings/   │
+└──────────────┘                  └──────────────┘
+       ▲
+       │
+┌──────────────┐
+│  Obsidian    │ ─── edit/clip ──► wiki/ + Clippings/
+│  (vault)     │ ◄── graph view ──┘
 └──────────────┘
 ```
-
-## Requirements
-
-- **Node.js 18+** (for web UI)
-- **Claude Code** (for AI operations)
-- **Git** (for version control)
-
-### Optional
-
-- **RTFM MCP** — semantic search over wiki content
-- **Obsidian** — GUI markdown editor (open repo as vault)
 
 ## License
 

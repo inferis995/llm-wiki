@@ -11,13 +11,13 @@ Replace `<WIKI_ROOT>` with the absolute path to your wiki directory.
 # Wiki Auto-Rules (SEMPRE attivo)
 
 ## Auto-Retrieve
-- Prima di rispondere a qualsiasi domanda tecnica, cerca nel wiki (leggi index.md o usa rtfm_search nel corpus wiki se disponibile)
-- Se trovi pagine rilevanti, leggile e usa le informazioni nella risposta
+- Prima di rispondere a qualsiasi domanda tecnica, cerca nel wiki tramite RTFM MCP (`rtfm_search` nel corpus `wiki`)
+- Se trovi pagine rilevanti, leggile con `rtfm_expand` e usa le informazioni nella risposta
 - Citazione: "Dal wiki: [[pagina]]"
 
 ## Auto-Save
 - Quando emerge una conoscenza utile da una conversazione (tecniche, decisioni, scoperte, soluzioni a problemi), salvala **immediatamente** nel wiki — NON aspettare che l'utente lo chieda
-- Flusso completo in un solo passo: crea pagina wiki → aggiorna index.md → aggiorna log.md → git commit → rtfm_sync (se disponibile)
+- Flusso completo in un solo passo: crea pagina wiki → aggiorna index.md → aggiorna log.md → rtfm_sync → git commit
 - Crea/aggiorna pagine in `<WIKI_ROOT>/wiki/` seguendo lo schema in `<WIKI_ROOT>/CLAUDE.md`
 
 ## Wiki Path

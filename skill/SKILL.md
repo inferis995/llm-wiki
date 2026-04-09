@@ -1,12 +1,12 @@
 ---
 name: llm-wiki
 description: >
-  Personal knowledge wiki with Obsidian-compatible markdown, web graph viewer, and Claude Code auto-save.
+  Personal knowledge wiki with Obsidian vault, web graph viewer, RTFM semantic search, and Claude Code auto-save.
   Ingest sources, create wiki pages, query knowledge base, lint health.
   Triggers: wiki, knowledge base, ingest source, note-taking, personal wiki,
   markdown knowledge, obsidian vault, "save to wiki", "wiki ingest", "wiki query", "wiki lint".
-version: 1.0.0
-tags: [wiki, knowledge, markdown, obsidian, notes, claude-code]
+version: 2.0.0
+tags: [wiki, knowledge, markdown, obsidian, rtfm, notes, claude-code]
 author: inferis995
 license: MIT
 repository_url: https://github.com/inferis995/llm-wiki
@@ -14,16 +14,45 @@ repository_url: https://github.com/inferis995/llm-wiki
 
 # LLM Wiki — Claude Code Skill
 
-You are the maintainer of a personal knowledge wiki. You write, update, and organize all content. The user reads, sources, and directs.
+You are the maintainer of a personal knowledge wiki built on an Obsidian vault. You write, update, and organize all content. The user reads, sources, and directs.
+
+## Prerequisites
+
+This wiki requires:
+
+1. **Obsidian** — Markdown editor with `[[wikilinks]]`, graph view, and browser clippings
+   - Download: https://obsidian.md/download
+   - The project root IS an Obsidian vault — open it with Obsidian
+2. **RTFM MCP** — Semantic search server for wiki content
+   - Setup: https://github.com/pashpashpash/rtfm-mcp
+   - Must be configured in your Claude Code MCP settings before using this skill
 
 ## Wiki Location
 
-The wiki root is the current working directory. Key paths:
+The wiki root is the current working directory (also your Obsidian vault). Key paths:
 - **Pages**: `./wiki/` — markdown files organized by category
 - **Raw sources**: `./raw/` — original documents (immutable)
 - **Schema**: `./CLAUDE.md` — this file defines conventions
 - **Index**: `./wiki/index.md` — catalog of every page
 - **Log**: `./wiki/log.md` — append-only chronological record
+- **Clippings**: `./Clippings/` — browser clippings saved via Obsidian web clipper
+
+## Obsidian Vault
+
+This project root is an Obsidian vault. All wiki pages use `[[wikilinks]]` which resolve natively in Obsidian.
+
+### Obsidian Skill Integration
+
+If the [Obsidian Vault skill](https://skills.sh/mattpocock/skills/obsidian-vault) is installed, follow its conventions:
+- **Flat structure preferred** — keep notes at the vault root when possible
+- **Title Case filenames** — e.g., `Docker.md`, `Reverse Proxy.md`
+- **Index notes** — maintain `wiki/index.md` as the master catalog
+- **Search** — use Obsidian search (Ctrl/Cmd+Shift+F) or `grep` for backlinks
+- **Related notes** — link related pages at the bottom of each page with `[[wikilinks]]`
+
+### Obsidian Web Clipper
+
+Install the Obsidian web clipper browser extension to save clippings directly to `Clippings/`. These appear automatically in the web UI as red nodes.
 
 ## Operations
 
@@ -41,12 +70,13 @@ When the user provides a new source (URL, file, or text):
    - Note contradictions with existing content
 5. Update `wiki/index.md`
 6. Append entry to `wiki/log.md`
-7. Git commit
+7. Run `rtfm_sync` on the wiki directory
+8. Git commit
 
 ### Query
 When the user asks a question:
-1. Read `wiki/index.md` to find relevant pages
-2. Read relevant pages
+1. Search the wiki with `rtfm_search` in corpus `wiki`
+2. Read relevant pages with `rtfm_expand`
 3. Synthesize answer with `[[page]]` citations
 4. If the answer is valuable, offer to file it as a new wiki page
 5. Cite: "Dal wiki: [[pagina]]"
@@ -143,17 +173,25 @@ When useful knowledge emerges during ANY conversation (techniques, decisions, di
 1. **Immediately** create or update the relevant wiki page
 2. Update `wiki/index.md`
 3. Append entry to `wiki/log.md`
-4. Git commit
-5. If RTFM MCP is available: run `rtfm_sync` on the wiki directory
+4. Run `rtfm_sync` on the wiki directory
+5. Git commit
 
 Do NOT wait for the user to ask. Save proactively.
 
 ## Auto-Retrieve
 
 Before answering technical questions:
-1. Search the wiki (read `index.md`, or use `rtfm_search` if RTFM MCP is available)
-2. If relevant pages exist, read them and incorporate into your answer
+1. Search the wiki with `rtfm_search` in corpus `wiki`
+2. If relevant pages exist, read them with `rtfm_expand` and incorporate into your answer
 3. Cite sources: "Dal wiki: [[pagina]]"
+
+## RTFM MCP
+
+RTFM MCP is **required** for semantic search over wiki content:
+- **Search**: `rtfm_search` in corpus `wiki`
+- **Read**: `rtfm_expand` on results
+- **Sync**: `rtfm_sync` on `wiki/` directory after every save
+- Setup guide: https://github.com/pashpashpash/rtfm-mcp
 
 ## Web UI
 
@@ -162,37 +200,5 @@ The project includes a Next.js web app in `web/` that visualizes the wiki:
 - **URL**: http://localhost:3000
 - Shows a force-directed graph of all wiki pages and their connections
 - Click nodes to read pages, click wikilinks to navigate
+- Clippings from Obsidian web clipper appear as red nodes
 - Customizable path: set `WIKI_PATH` env var in `web/.env.local`
-
-## Obsidian Setup (Optional)
-
-The wiki is fully Obsidian-compatible. To use Obsidian as a GUI editor:
-
-### Install Obsidian
-1. Download from https://obsidian.md/download
-2. Install for your platform (Windows / macOS / Linux)
-3. Launch Obsidian
-
-### Open as Vault
-1. Click **"Open folder as vault"**
-2. Select the project root directory (the one containing `wiki/`, `raw/`, `CLAUDE.md`)
-3. Obsidian will index all `.md` files automatically
-
-### Verify
-- `[[wikilinks]]` should resolve and show as clickable links
-- The graph view (icon in left sidebar) shows connections between pages
-- All pages in `wiki/` appear in the file explorer
-
-### Tips
-- Edit pages in Obsidian — Claude reads and updates them too
-- Use the graph view to explore knowledge connections
-- Install community plugins if desired (the vault works perfectly without them)
-- `raw/` folder is ignored by Obsidian conventions — it's for source documents only
-
-## RTFM MCP (Optional)
-
-If RTFM MCP server is available, use it for enhanced search:
-- Search: `rtfm_search` in corpus `wiki`
-- Read results: `rtfm_expand`
-- Sync after saves: `rtfm_sync` on `wiki/` directory
-- If not available, fall back to reading `index.md` and using grep/glob

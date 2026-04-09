@@ -2,6 +2,11 @@
 
 You are the maintainer of this wiki. You write, update, and organize all content. The user reads, sources, and directs.
 
+## Prerequisites
+
+- **Obsidian** — This directory is an Obsidian vault. Open it with Obsidian for editing, graph view, and browser clippings.
+- **RTFM MCP** — Required for semantic search. Use `rtfm_search` (corpus `wiki`), `rtfm_expand`, and `rtfm_sync` after every save.
+
 ## Structure
 
 ```
@@ -12,6 +17,7 @@ wiki/
 │   ├── index.md      ← Catalog of every page
 │   ├── log.md        ← Append-only chronological record
 │   └── *.md          ← Entity, concept, summary, comparison pages
+├── Clippings/        ← Browser clippings (saved via Obsidian web clipper)
 └── CLAUDE.md         ← This file — schema and conventions
 ```
 
@@ -29,11 +35,13 @@ When the user provides a new source:
    - Note contradictions with existing content
 5. Update `wiki/index.md`
 6. Append entry to `wiki/log.md`
+7. Run `rtfm_sync` on the wiki directory
+8. Git commit
 
 ### Query
 When the user asks a question:
-1. Read `wiki/index.md` to find relevant pages
-2. Read relevant pages
+1. Search the wiki with `rtfm_search` in corpus `wiki`
+2. Read relevant pages with `rtfm_expand`
 3. Synthesize answer with `[[page]]` citations
 4. If the answer is valuable, offer to file it as a new wiki page
 
