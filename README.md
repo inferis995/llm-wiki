@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="web/public/icon-gemini.png" alt="LLM Wiki" width="120">
+</p>
+
+<p align="center">
   <h1 align="center">LLM Wiki</h1>
   <p align="center">
     <strong>Personal knowledge base powered by Claude Code + Obsidian.</strong><br>
