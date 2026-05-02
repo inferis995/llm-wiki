@@ -10,7 +10,7 @@
   </p>
   <p align="center">
     <img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js" alt="Next.js">
-    <img src="https://img.shields.io/badge/D3.js-7-orange?logo=d3.js" alt="D3.js">
+    <img src="https://img.shields.io/badge/Three.js-170-green?logo=three.js" alt="D3.js">
     <img src="https://img.shields.io/badge/Tailwind_CSS-3-blue?logo=tailwindcss" alt="Tailwind CSS">
     <img src="https://img.shields.io/badge/Obsidian-Vault-purple?logo=obsidian" alt="Obsidian">
     <img src="https://img.shields.io/badge/RTFM_MCP-Semantic_Search-green" alt="RTFM MCP">
