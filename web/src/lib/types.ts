@@ -15,11 +15,15 @@ export interface GraphNode {
   group: number;
   x?: number;
   y?: number;
-  fx?: number | null;
-  fy?: number | null;
+  z?: number;
+  fx?: number;
+  fy?: number;
+  fz?: number;
   index?: number;
   vx?: number;
   vy?: number;
+  vz?: number;
+  val?: number;
 }
 
 export interface GraphLink {
